@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from download import downloadPlaylist, downloadVideo
+
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import *
+import customtkinter
+
 
 def chooseFile(entry):
     dossier = filedialog.askdirectory(title="Sélectionnez un dossier")
@@ -28,11 +31,23 @@ def main():
     path = tk.StringVar()
     entry = tk.Entry(root, textvariable=path)
     entry.pack(pady=10)
-    buttonPath = tk.Button(root, text="Choisir un dossier", command=lambda: chooseFile(entry))
+    buttonPath = customtkinter.CTkButton(
+        root, 
+        text="Choisir un dossier", 
+        corner_radius=50,
+        command=lambda: chooseFile(entry)
+    )
     buttonPath.pack() 
 
 
-    tk.Button(root, text="Download", command=lambda: downloadPlaylist(url=url.get(), path=path.get())).pack()
+    btnDownload = customtkinter.CTkButton(
+        root,
+        text="Download",
+        border_spacing=10,
+        corner_radius=50,
+        command=lambda: downloadPlaylist(url=url.get(), path=path.get())
+    )
+    btnDownload.pack()
 
     # TODO: afficher les logs d'erreur s'il y en a sans faire crash la fenetre
 
