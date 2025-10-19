@@ -4,8 +4,7 @@
 
 Code that manage all the tkinter window
 """
-from download import downloadPlaylist
-
+from download import downloadAny
 
 import tkinter as tk
 from tkinter import *
@@ -29,7 +28,11 @@ def _initRoot():
     root.title("MP3 playlist downloader")
     root.state("zoomed")
     root.geometry("1920x1080")
+
+    # Colors settings
     root.configure(background="#282A36")
+    root.option_add("*Background", "#282A36")
+    root.option_add("*Foreground", "#f8f8f2")
     return root
 
 def app():
@@ -46,28 +49,30 @@ def app():
     entryUrl.pack(pady=10)
 
 
+    fr1 = tk.Frame(root)
+    fr1.pack(fill="y", anchor="center")
     tk.Label(text="Where to download").pack()
     path = tk.StringVar()
     entryPath = customtkinter.CTkEntry(
-        root,
+        fr1,
         textvariable=path
     )
-    entryPath.pack(pady=10)
+    entryPath.pack(pady=10, padx=10, side="left")
 
     buttonPath = customtkinter.CTkButton(
-        root, 
-        text="Choisir un dossier", 
+        fr1, 
+        text="Choose a folder", 
         corner_radius=50,
         command=lambda: chooseFile(entryPath)
     )
-    buttonPath.pack() 
+    buttonPath.pack(side="left") 
 
 
     btnDownload = customtkinter.CTkButton(
         root,
         text="Download",
         corner_radius=50,
-        command=lambda: downloadPlaylist(url=url.get(), path=path.get())
+        command=lambda: downloadAny(url=url.get(), path=path.get())
     )
     btnDownload.pack()
 
