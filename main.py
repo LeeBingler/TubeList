@@ -7,7 +7,6 @@ def main():
 
     # windows parameters
     app()
-    print("download finish")
     return 0
 
 if __name__ == "__main__":

@@ -10,18 +10,12 @@ import tkinter as tk
 from tkinter import *
 import customtkinter
 
-def chooseFile(entry):
+def _chooseFile(entry):
     file = customtkinter.filedialog.askdirectory(title="Sélectionnez un dossier")
 
     if file:
         entry.delete(0, tk.END)
         entry.insert(0, file)
-
-def _title():
-    title = tk.Label(text="MP3 YT playlist downloader")
-    title.pack()
-
-    title.config(font=("Arial", 25), pady=10)
 
 def _initRoot():
     root = tk.Tk()
@@ -33,12 +27,20 @@ def _initRoot():
     root.configure(background="#282A36")
     root.option_add("*Background", "#282A36")
     root.option_add("*Foreground", "#f8f8f2")
+    root.option_add("*Highlightbackground", "	#6272a4")
     return root
+
+def _initTitle():
+    title = tk.Label(text="MP3 YT playlist downloader")
+    title.pack()
+
+    title.config(font=("Arial", 25), pady=10)
+    return title
 
 def app():
     root = _initRoot()
 
-    _title()
+    title = _initTitle()
 
     url = tk.StringVar()
     tk.Label(text="URL of the playlist / song").pack()
@@ -63,7 +65,7 @@ def app():
         fr1, 
         text="Choose a folder", 
         corner_radius=50,
-        command=lambda: chooseFile(entryPath)
+        command=lambda: _chooseFile(entryPath)
     )
     buttonPath.pack(side="left") 
 
@@ -76,7 +78,11 @@ def app():
     )
     btnDownload.pack()
 
+    # TODO: afficher la thumbnail de la video et le titre
+
     # TODO: afficher les logs d'erreur s'il y en a sans faire crash la fenetre
+
+    # TODO: afficher progression du téléchargement
 
     tk.Label(root, text="Nothing will work unless you do.").pack()
     tk.Label(root, text="- Maya Angelou").pack()
