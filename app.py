@@ -12,11 +12,11 @@ from tkinter import *
 import customtkinter
 
 def chooseFile(entry):
-    dossier = customtkinter.filedialog.askdirectory(title="Sélectionnez un dossier")
+    file = customtkinter.filedialog.askdirectory(title="Sélectionnez un dossier")
 
-    if dossier:  # Si l'utilisateur n'annule pas
-        entry.delete(0, tk.END)  # Efface le champ texte
-        entry.insert(0, dossier) # Met le chemin sélectionné dans le champ
+    if file:
+        entry.delete(0, tk.END)
+        entry.insert(0, file)
 
 def app():
     root = tk.Tk()
