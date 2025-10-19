@@ -18,10 +18,24 @@ def chooseFile(entry):
         entry.delete(0, tk.END)
         entry.insert(0, file)
 
-def app():
+def _title():
+    title = tk.Label(text="MP3 YT playlist downloader")
+    title.pack()
+
+    title.config(font=("Arial", 25), pady=10)
+
+def _initRoot():
     root = tk.Tk()
     root.title("MP3 playlist downloader")
     root.state("zoomed")
+    root.geometry("1920x1080")
+    root.configure(background="#282A36")
+    return root
+
+def app():
+    root = _initRoot()
+
+    _title()
 
     url = tk.StringVar()
     tk.Label(text="URL of the playlist / song").pack()
