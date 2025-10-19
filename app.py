@@ -24,22 +24,27 @@ def app():
     root.state("zoomed")
 
     url = tk.StringVar()
-    tk.Label(text="URL").pack()
-    tk.Entry(root, textvariable=url).pack()
+    tk.Label(text="URL of the playlist / song").pack()
+    entryUrl = customtkinter.CTkEntry(
+        root,
+        textvariable=url,
+    )
+    entryUrl.pack(pady=10)
 
 
-    tk.Label(text="Path").pack()
+    tk.Label(text="Where to download").pack()
     path = tk.StringVar()
-    entry = tk.Entry(root, textvariable=path)
     entryPath = customtkinter.CTkEntry(
         root,
-        textvariable=path)
-    entry.pack(pady=10)
+        textvariable=path
+    )
+    entryPath.pack(pady=10)
+
     buttonPath = customtkinter.CTkButton(
         root, 
         text="Choisir un dossier", 
         corner_radius=50,
-        command=lambda: chooseFile(entry)
+        command=lambda: chooseFile(entryPath)
     )
     buttonPath.pack() 
 
