@@ -51,9 +51,9 @@ def app():
     entryUrl.pack(pady=10)
 
 
+    tk.Label(text="Where to download").pack()
     fr1 = tk.Frame(root)
     fr1.pack(fill="y", anchor="center")
-    tk.Label(text="Where to download").pack()
     path = tk.StringVar()
     entryPath = customtkinter.CTkEntry(
         fr1,
@@ -65,6 +65,7 @@ def app():
         fr1, 
         text="Choose a folder", 
         corner_radius=50,
+        fg_color="#6272a4",
         command=lambda: _chooseFile(entryPath)
     )
     buttonPath.pack(side="left") 
@@ -74,6 +75,7 @@ def app():
         root,
         text="Download",
         corner_radius=50,
+        fg_color="#6272a4",
         command=lambda: downloadAny(url=url.get(), path=path.get())
     )
     btnDownload.pack()
