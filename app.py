@@ -19,7 +19,7 @@ def _chooseFile(entry):
 
 def _handleDownload(url, path, resultV):
     result = downloadAny(url, path)
-    resultV.set(result[0])
+    resultV.set(result)
 
 def _initRoot():
     root = tk.Tk()
@@ -86,14 +86,12 @@ def app():
     btnDownload.pack()
 
     # TODO: afficher la thumbnail de la video et le titre
-
-    # TODO: afficher les logs d'erreur s'il y en a sans faire crash la fenetre
     logError = tk.Label(
         root,
         textvariable=resultDownload,
         font=("Arial", 15),
         fg="red"
-        )
+    )
     logError.pack()
 
     # TODO: afficher progression du téléchargement
