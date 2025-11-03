@@ -50,24 +50,6 @@ Built with **Tkinter**, **CustomTkinter**, and **pytubefix**, this project inclu
 
 ---
 
-## Project Structure
-
-```
-MP3-playlist-downloader/
-│
-├── app/
-│   ├── app.py           # Main GUI logic
-│   ├── utilsApp.py      # Utility functions for events and handlers
-│   ├── Theme.py         # Global theming (fonts, colors, styles)
-│
-├── download.py          # Handles YouTube and playlist downloads
-├── Pipfile              # Dependency management
-├── Pipfile.lock         # Locked dependency versions
-└── main.py              # Application entry point
-```
-
----
-
 ## Technical Details
 
 * **Framework:** Tkinter and CustomTkinter
