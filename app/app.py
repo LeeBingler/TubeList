@@ -31,18 +31,18 @@ def _initTitle(root):
     return title
 
 def _initURL(root):
-    url = tk.StringVar()
     tk.Label(text="URL of the playlist / song", font=theme.fontNormal).pack()
     entryUrl = customtkinter.CTkEntry(
         root,
-        textvariable=url,
         font=theme.fontNormal,
         width=theme.entryWidth,
+        placeholder_text="https://www.youtube.com/watch?v=<Your Video / Playlist>",
+        placeholder_text_color=theme.placeholderColor
     )
     entryUrl.pack(pady=10, ipady=10)
     theme.registeredEntry.append(entryUrl)
 
-    return [url, entryUrl]
+    return entryUrl
 
 def app():
     root = _initRoot()
@@ -55,13 +55,12 @@ def app():
     tk.Label(text="Where to download", font=theme.fontNormal).pack()
     fr1 = tk.Frame(root)
     fr1.pack(fill="y", anchor="center")
-    path = tk.StringVar()
     entryPath = customtkinter.CTkEntry(
         fr1,
-        textvariable=path,
         font=theme.fontNormal,
         width=theme.entryWidth,
-        # TODO: add placeholder
+        placeholder_text="C:/Users/<Username>/Documents/",
+        placeholder_text_color=theme.placeholderColor
     )
     entryPath.pack(pady=10, padx=10, ipady=10, side="left")
     theme.registeredEntry.append(entryPath)
@@ -89,7 +88,7 @@ def app():
         font=theme.fontNormal,
         fg_color=theme.highlightBg,
         text_color=theme.btnDownloadTextColor,
-        command=lambda: handleDownload(url=url[0].get(), path=path.get(), resultDownload=resultDownload)
+        command=lambda: handleDownload(url=url.get(), path=entryPath.get(), resultDownload=resultDownload)
     )
     btnDownload.pack()
     logLabel.pack()
