@@ -12,3 +12,15 @@ def chooseFile(entry):
 def handleDownload(url, path, resultDownload):
     result = downloadAny(url, path)
     resultDownload.set(result)
+
+def onResize(root, fonts):
+    actualSize = fonts["fontNormal"].cget("size")
+    newSize = max(17, min(int(root.winfo_width() / 50), 35))
+
+    print(actualSize, newSize)
+
+    if abs(actualSize - newSize) < 5:
+        return
+
+    fonts["fontNormal"].configure(size=newSize)
+    fonts["fontTitle"].configure(size=newSize + 10)
