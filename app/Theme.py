@@ -30,6 +30,7 @@ class Theme():
         # entry init
         self.registeredEntry = []
         self.entryWidth = 640
+        self.ipadyEntry = 10
 
     @property
     def fontNormal(self):
@@ -55,9 +56,11 @@ class Theme():
 
     def _onResizeEntry(self, width):
         self.entryWidth = max(200, width / 3)
+        self.ipadyEntry = max(9, int(self.fontNormal.cget("size") / 2))
 
         for entry in self.registeredEntry:
             entry.configure(width=self.entryWidth)
+            entry.pack_configure(ipady=self.ipadyEntry)
 
     def onResize(self, width):
         self._onResizeFont(width)

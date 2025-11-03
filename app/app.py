@@ -37,9 +37,9 @@ def _initURL(root):
         root,
         textvariable=url,
         font=theme.fontNormal,
-        width=theme.entryWidth
+        width=theme.entryWidth,
     )
-    entryUrl.pack(pady=10)
+    entryUrl.pack(pady=10, ipady=10)
     theme.registeredEntry.append(entryUrl)
 
     return [url, entryUrl]
@@ -60,9 +60,10 @@ def app():
         fr1,
         textvariable=path,
         font=theme.fontNormal,
-        width=theme.entryWidth
+        width=theme.entryWidth,
+        # TODO: add placeholder
     )
-    entryPath.pack(pady=10, padx=10, side="left")
+    entryPath.pack(pady=10, padx=10, ipady=10, side="left")
     theme.registeredEntry.append(entryPath)
 
     buttonPath = customtkinter.CTkButton(
