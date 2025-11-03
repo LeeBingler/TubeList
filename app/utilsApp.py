@@ -14,12 +14,15 @@ def handleDownload(url, path, resultDownload):
     result = downloadAny(url, path)
     resultDownload.set(result)
 
+def _updateEntrySize(widget):
+    if isinstance(widget, customtkinter.CTkEntry):
+        widget.configure(width=theme.entryWidth)
+
+    for children in widget.winfo_children():
+        _updateEntrySize(children)
+
 def onResize(root):
-    actualSize = theme.fontNormal.cget("size")
-    newSize = max(17, min(int(root.winfo_width() / 50), 35))
+    theme.onResize(root.winfo_width())
 
-    if abs(actualSize - newSize) < 5:
-        return
-
-    theme.fontNormal.configure(size=newSize)
-    theme.fontTitle.configure(size=newSize + 10)
+    for widget in root.winfo_children():
+        _updateEntrySize(widget)

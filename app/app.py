@@ -36,7 +36,8 @@ def _initURL(root):
     entryUrl = customtkinter.CTkEntry(
         root,
         textvariable=url,
-        font=theme.fontNormal
+        font=theme.fontNormal,
+        width=theme.entryWidth
     )
     entryUrl.pack(pady=10)
 
@@ -58,6 +59,7 @@ def app():
         fr1,
         textvariable=path,
         font=theme.fontNormal,
+        width=theme.entryWidth
     )
     entryPath.pack(pady=10, padx=10, side="left")
 

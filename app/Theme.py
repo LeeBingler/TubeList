@@ -22,6 +22,9 @@ class Theme():
         self.fgColor = "#f8f8f2"
         self.highlightBg = "#6272a4"
 
+        # entry init
+        self.entryWidth = 640
+
     @property
     def fontNormal(self):
         if self._fontNormal is None:
@@ -33,5 +36,25 @@ class Theme():
         if self._fontTitle is None:
             self._fontTitle = customtkinter.CTkFont(family="Arial", size=25, weight="bold")
         return self._fontTitle
+    
+    def _onResizeFont(self, width):
+        actualSize = theme.fontNormal.cget("size")
+        newSize = max(17, min(int(width / 50), 35))
+
+        if abs(actualSize - newSize) < 5:
+            return
+
+        self.fontNormal.configure(size=newSize)
+        self.fontTitle.configure(size=newSize + 10)
+
+    def _onResizeEntry(self, width):
+        self.entryWidth = max(200, width / 3)
+
+    def onResize(self, width):
+        self._onResizeFont(width)
+        self._onResizeEntry(width)
+
+
+
     
 theme = Theme()
