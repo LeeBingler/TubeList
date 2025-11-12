@@ -25,13 +25,13 @@ def _initRoot():
 
 def _initTitle(root):
     title = customtkinter.CTkLabel(root, text="MP3 YT playlist downloader")
-    title.pack()
+    title.pack(anchor="center")
 
     title.configure(pady=10)
     return title
 
 def _initURL(root):
-    tk.Label(text="URL of the playlist / song", font=theme.fontNormal).pack()
+    tk.Label(text="URL of the playlist / song", font=theme.fontNormal).pack(anchor="center")
     entryUrl = customtkinter.CTkEntry(
         root,
         font=theme.fontNormal,
@@ -39,7 +39,7 @@ def _initURL(root):
         placeholder_text="https://www.youtube.com/watch?v=<Your Video / Playlist>",
         placeholder_text_color=theme.placeholderColor
     )
-    entryUrl.pack(pady=10, ipady=10)
+    entryUrl.pack(pady=10, ipady=10, anchor="center")
     theme.registeredEntry.append(entryUrl)
 
     return entryUrl
@@ -52,7 +52,7 @@ def app():
 
     url = _initURL(root)
 
-    tk.Label(text="Where to download", font=theme.fontNormal).pack()
+    tk.Label(text="Where to download", font=theme.fontNormal).pack(anchor="center")
     fr1 = tk.Frame(root)
     fr1.pack(fill="y", anchor="center")
     entryPath = customtkinter.CTkEntry(
@@ -62,7 +62,7 @@ def app():
         placeholder_text="C:/Users/<Username>/Documents/",
         placeholder_text_color=theme.placeholderColor
     )
-    entryPath.pack(pady=10, padx=10, ipady=10, side="left")
+    entryPath.pack(pady=10, padx=10, ipady=10, side="left", anchor="center")
     theme.registeredEntry.append(entryPath)
 
     buttonPath = customtkinter.CTkButton(
@@ -73,7 +73,7 @@ def app():
         font=theme.fontNormal,
         command=lambda: chooseFile(entryPath)
     )
-    buttonPath.pack(side="left")
+    buttonPath.pack(side="left", anchor="center")
 
     resultDownload = tk.StringVar(value="")
     logLabel = tk.Label(
@@ -90,11 +90,11 @@ def app():
         text_color=theme.btnDownloadTextColor,
         command=lambda: handleDownload(url=url.get(), path=entryPath.get(), resultDownload=resultDownload)
     )
-    btnDownload.pack()
-    logLabel.pack()
+    btnDownload.pack(anchor="center")
+    logLabel.pack(anchor="center")
 
-    tk.Label(root, text="Nothing will work unless you do.", font=theme.fontNormal).pack()
-    tk.Label(root, text="- Maya Angelou", font=theme.fontNormal).pack()
+    tk.Label(root, text="Nothing will work unless you do.", font=theme.fontNormal).pack(anchor="center")
+    tk.Label(root, text="- Maya Angelou", font=theme.fontNormal).pack(anchor="center")
 
 
     root.bind("<Configure>", lambda _: onResize(root))
