@@ -19,6 +19,7 @@ def _initRoot():
     # Icon setting
     icon = tk.PhotoImage(file='./MP3-playlist-downloader/images/icon.png') # load image from root of project
     root.iconphoto(True, icon)
+
     # Colors settings
     root.configure(background=theme.bgColor)
     root.option_add("*Background", theme.bgColor)
@@ -30,11 +31,11 @@ def _initTitle(root):
     title = customtkinter.CTkLabel(root, text="MP3 YT playlist downloader")
     title.pack(anchor="center")
 
-    title.configure(pady=10)
+    title.configure(pady=50)
     return title
 
 def _initURL(root):
-    tk.Label(text="URL of the playlist / song", font=theme.fontNormal).pack(anchor="center")
+    tk.Label(text="URL of the playlist / song:", font=theme.fontNormal).pack(anchor="center")
     entryUrl = customtkinter.CTkEntry(
         root,
         font=theme.fontNormal,
@@ -55,7 +56,7 @@ def app():
 
     url = _initURL(root)
 
-    tk.Label(text="Where to download", font=theme.fontNormal).pack(anchor="center")
+    tk.Label(text="Where to download:", font=theme.fontNormal).pack(anchor="center")
     fr1 = tk.Frame(root)
     fr1.pack(fill="y", anchor="center")
     entryPath = customtkinter.CTkEntry(
@@ -76,25 +77,27 @@ def app():
         font=theme.fontNormal,
         command=lambda: chooseFile(entryPath)
     )
-    buttonPath.pack(side="left", anchor="center")
+    buttonPath.pack(side="left", anchor="center", ipady=10)
 
     resultDownload = tk.StringVar(value="")
-    logLabel = tk.Label(
-        root,
-        textvariable=resultDownload,
-        font=theme.fontNormal,
-    )
+    
     btnDownload = customtkinter.CTkButton(
         root,
         text="Download",
         corner_radius=50,
         font=theme.fontNormal,
-        fg_color=theme.highlightBg,
-        text_color=theme.btnDownloadTextColor,
+        fg_color=theme.btnDownloadFgColor,
+        hover_color=theme.btnDownloadHoverColor,
         command=lambda: handleDownload(url=url.get(), path=entryPath.get(), resultDownload=resultDownload)
     )
-    btnDownload.pack(anchor="center")
-    logLabel.pack(anchor="center")
+    btnDownload.pack(anchor="center", pady=10, ipadx=10, ipady=10)
+
+    logLabel = tk.Label(
+        root,
+        textvariable=resultDownload,
+        font=theme.fontNormal,
+    )
+    logLabel.pack(anchor="center", pady=30)
 
     tk.Label(root, text="Nothing will work unless you do.", font=theme.fontNormal).pack(anchor="center")
     tk.Label(root, text="- Maya Angelou", font=theme.fontNormal).pack(anchor="center")
