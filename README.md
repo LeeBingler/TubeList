@@ -1,4 +1,4 @@
-# MP3 Playlist Downloader
+# TubeList
 
 A modern Python GUI application that allows you to easily download YouTube videos or playlists as MP3 files.
 Built with **Tkinter**, **CustomTkinter**, and **pytubefix**, this project includes a simple UI, dynamic resizing, and robust error handling.
@@ -32,7 +32,7 @@ Built with **Tkinter**, **CustomTkinter**, and **pytubefix**, this project inclu
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/LeeBingler/MP3-playlist-downloader.git
+   git clone https://github.com/LeeBingler/TubeList.git
    cd MP3-playlist-downloader
    ```
 

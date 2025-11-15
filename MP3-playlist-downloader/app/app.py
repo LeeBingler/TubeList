@@ -9,7 +9,7 @@ from app.Theme import theme
 
 import tkinter as tk
 import customtkinter
-import tkinter.font as tkFont
+from PIL import Image
 
 def _initRoot():
     root = tk.Tk()
@@ -30,9 +30,12 @@ def _initRoot():
 
 def _initTitle(root):
     title = customtkinter.CTkLabel(root, text="MP3 YT playlist downloader")
-    title.pack(anchor="center")
+    title.pack(anchor="center", pady=(50, 0))
+    title.configure(font=theme.fontTitle)
 
-    title.configure(pady=50)
+    subtitle = customtkinter.CTkLabel(root, text="The best free and fast converter for Youtube video to MP3 format")
+    subtitle.pack(anchor="center", pady=(10, 50))
+    subtitle.configure(font=theme.fontSubtitle)
     return title
 
 def _initURL(root):
@@ -49,14 +52,7 @@ def _initURL(root):
 
     return entryUrl
 
-def app():
-    root = _initRoot()
-
-    title = _initTitle(root)
-    title.configure(font=theme.fontTitle)
-
-    url = _initURL(root)
-
+def _initPath(root):
     tk.Label(text="Where to download:", font=theme.fontNormal).pack(anchor="center", pady=(20, 0))
     fr1 = tk.Frame(root)
     fr1.pack(fill="y", anchor="center")
@@ -70,18 +66,33 @@ def app():
     entryPath.pack(pady=10, padx=10, ipady=10, side="left", anchor="center")
     theme.registeredEntry.append(entryPath)
 
+    folderImage = customtkinter.CTkImage(
+        light_image=Image.open('./MP3-playlist-downloader/images/folder-icon-size_128.png'),
+        dark_image=Image.open('./MP3-playlist-downloader/images/folder-icon-size_128.png'),
+        size=(32, 32)
+    )
+
     buttonPath = customtkinter.CTkButton(
         fr1,
         text="Choose a folder",
         corner_radius=50,
         fg_color=theme.highlightBg,
         font=theme.fontNormal,
+        image=folderImage,
         command=lambda: chooseFile(entryPath)
     )
     buttonPath.pack(side="left", anchor="center", ipady=10)
 
+    return entryPath
+
+def _initDowload(root, url, entryPath):
     resultDownload = tk.StringVar(value="")
-    
+    downloadImage = customtkinter.CTkImage(
+        light_image=Image.open('./MP3-playlist-downloader/images/data-transfer-download-icon-size_64.png'),
+        dark_image=Image.open('./MP3-playlist-downloader/images/data-transfer-download-icon-size_64.png'),
+        size=(32, 32)   # taille désirée
+    )
+
     btnDownload = customtkinter.CTkButton(
         root,
         text="Download",
@@ -89,9 +100,21 @@ def app():
         font=theme.fontNormal,
         fg_color=theme.btnDownloadFgColor,
         hover_color=theme.btnDownloadHoverColor,
+        image=downloadImage,
         command=lambda: handleDownload(url=url.get(), path=entryPath.get(), resultDownload=resultDownload)
     )
     btnDownload.pack(anchor="center", pady=10, ipadx=10, ipady=10)
+
+    return resultDownload
+
+def app():
+    root = _initRoot()
+
+    title = _initTitle(root)
+    url = _initURL(root)
+    entryPath = _initPath(root)
+
+    resultDownload = _initDowload(root, url, entryPath)
 
     logLabel = tk.Label(
         root,

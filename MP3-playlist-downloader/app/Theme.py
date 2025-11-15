@@ -22,6 +22,7 @@ class Theme():
         # font init
         self._fontNormal = None
         self._fontTitle = None
+        self._fontSubtitle = None
         self.fontNormalSize = 15
         self.fontFamily = "Comic Sans MS"
         
@@ -50,16 +51,23 @@ class Theme():
             self._fontTitle = customtkinter.CTkFont(family=self.fontFamily, size=25, weight="bold")
         return self._fontTitle
     
+    @property
+    def fontSubtitle(self):
+        if self._fontSubtitle is None:
+            self._fontSubtitle = customtkinter.CTkFont(family=self.fontFamily, size=7)
+        return self._fontSubtitle
+    
     def _onResizeFont(self, width):
         actualSize = self.fontNormalSize
-        newSize = max(17, min(int(width / 50), 35))
+        newSize = max(20, min(int(width / 50), 40))
 
         if abs(actualSize - newSize) < 5:
             return
 
         self.fontNormalSize = newSize
         self.fontNormal.configure(size=newSize)
-        self.fontTitle.configure(size=newSize + 10)
+        self.fontTitle.configure(size=newSize + 15)
+        self.fontSubtitle.configure(size=newSize - 7)
 
     def _onResizeEntry(self, width):
         self.entryWidth = max(200, width / 3)
