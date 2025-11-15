@@ -33,7 +33,7 @@ Built with **Tkinter**, **CustomTkinter**, and **pytubefix**, this project inclu
 
    ```bash
    git clone https://github.com/LeeBingler/TubeList.git
-   cd MP3-playlist-downloader
+   cd TubeList
    ```
 
 2. Install dependencies using Pipenv:
