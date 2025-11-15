@@ -4,7 +4,7 @@
 
 Code that manage all the tkinter window
 """
-from app.utilsApp import chooseFile, handleDownload, onResize
+from app.utilsApp import chooseFile, handleDownload
 from app.Theme import theme
 
 import tkinter as tk
@@ -40,21 +40,21 @@ def _initTitle(root):
     return title
 
 def _initURL(root):
-    tk.Label(text="URL of the playlist / song:", font=theme.fontNormal).pack(anchor="center")
+    tk.Label(root, text="URL of the playlist / song:", font=theme.fontNormal).pack(anchor="center")
     entryUrl = customtkinter.CTkEntry(
         root,
         font=theme.fontNormal,
-        width=theme.entryWidth,
+        width=theme.entryWidth + 400,
         placeholder_text="https://www.youtube.com/watch?v=<Your Video / Playlist>",
         placeholder_text_color=theme.placeholderColor
     )
     entryUrl.pack(pady=10, ipady=10, anchor="center")
-    theme.registeredEntry.append(entryUrl)
+    theme.registeredEntry["entryUrl"] = entryUrl
 
     return entryUrl
 
 def _initPath(root):
-    tk.Label(text="Where to download:", font=theme.fontNormal).pack(anchor="center", pady=(20, 0))
+    tk.Label(root, text="Where to download:", font=theme.fontNormal).pack(anchor="center", pady=(20, 0))
     fr1 = tk.Frame(root)
     fr1.pack(fill="y", anchor="center")
     entryPath = customtkinter.CTkEntry(
@@ -64,8 +64,8 @@ def _initPath(root):
         placeholder_text="C:/Users/<Username>/Documents/",
         placeholder_text_color=theme.placeholderColor
     )
-    entryPath.pack(pady=10, padx=10, ipady=10, side="left", anchor="center")
-    theme.registeredEntry.append(entryPath)
+    entryPath.pack(padx=10, pady=10, ipady=10, side="left", anchor="center")
+    theme.registeredEntry["entryPath"] = entryPath
 
     folderImage = customtkinter.CTkImage(
         light_image=Image.open('./TubeList/images/folder-icon-size_128.png'),
@@ -84,14 +84,14 @@ def _initPath(root):
     )
     buttonPath.pack(side="left", anchor="center", ipady=10)
 
-    return entryPath
+    return {"entry": entryPath, "button": buttonPath}
 
 def _initDowload(root, url, entryPath):
     resultDownload = tk.StringVar(value="")
     downloadImage = customtkinter.CTkImage(
         light_image=Image.open('./TubeList/images/data-transfer-download-icon-size_64.png'),
         dark_image=Image.open('./TubeList/images/data-transfer-download-icon-size_64.png'),
-        size=(32, 32)   # taille désirée
+        size=(32, 32)
     )
 
     btnDownload = customtkinter.CTkButton(
@@ -104,22 +104,21 @@ def _initDowload(root, url, entryPath):
         image=downloadImage,
         command=lambda: handleDownload(url=url.get(), path=entryPath.get(), resultDownload=resultDownload)
     )
-    btnDownload.pack(anchor="center", pady=10, ipadx=10, ipady=10)
+    btnDownload.pack(anchor="center", pady=20, ipadx=15, ipady=15)
 
-    return resultDownload
+    return {"result": resultDownload, "button": btnDownload}
 
 def app():
     root = _initRoot()
 
     title = _initTitle(root)
-    url = _initURL(root)
-    entryPath = _initPath(root)
-
-    resultDownload = _initDowload(root, url, entryPath)
+    entryUrl = _initURL(root)
+    path = _initPath(root)
+    download = _initDowload(root, entryUrl, path.get("entry"))
 
     logLabel = tk.Label(
         root,
-        textvariable=resultDownload,
+        textvariable=download.get("result"),
         font=theme.fontNormal,
     )
     logLabel.pack(anchor="center", pady=30)
@@ -127,8 +126,7 @@ def app():
     tk.Label(root, text="Nothing will work unless you do.", font=theme.fontNormal).pack(anchor="center")
     tk.Label(root, text="- Maya Angelou", font=theme.fontNormal).pack(anchor="center")
 
-
-    root.bind("<Configure>", lambda _: onResize(root))
+    root.bind("<Configure>", lambda _: theme.onResize(root.winfo_width(), path.get("button").winfo_width()))
     root.mainloop()
 
     return 0

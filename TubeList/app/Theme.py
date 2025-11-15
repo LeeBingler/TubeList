@@ -35,7 +35,7 @@ class Theme():
         self.placeholderColor = "#919191"
 
         # entry init
-        self.registeredEntry = []
+        self.registeredEntry = {}
         self.entryWidth = 640
         self.ipadyEntry = 10
 
@@ -69,21 +69,27 @@ class Theme():
         self.fontTitle.configure(size=newSize + 15)
         self.fontSubtitle.configure(size=newSize - 7)
 
-    def _onResizeEntry(self, width):
+    def _onResizeEntry(self, width, buttonPathWidth):
         self.entryWidth = max(200, width / 3)
         self.ipadyEntry = max(9, int(self.fontNormalSize / 2))
 
-        for entry in self.registeredEntry:
-            entry.configure(width=self.entryWidth)
-            entry.pack_configure(ipady=self.ipadyEntry)
+        urlEntry = self.registeredEntry.get("entryUrl")
+        urlEntry.configure(width=self.entryWidth + buttonPathWidth)
 
-    def onResize(self, width):
+        pathEntry = self.registeredEntry.get("entryPath")
+        pathEntry.configure(width=self.entryWidth)
+
+
+    def onResize(self, width, buttonPathWidth):
         if abs(width - self._lastWidthWindow) < 5:
             return
         
+        if buttonPathWidth == 1:
+            buttonPathWidth = 339
+
         self._lastWidthWindow = width
         self._onResizeFont(width)
-        self._onResizeEntry(width)
+        self._onResizeEntry(width, buttonPathWidth)
 
 
 theme = Theme()

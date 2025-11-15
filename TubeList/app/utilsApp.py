@@ -13,6 +13,3 @@ def chooseFile(entry):
 def handleDownload(url, path, resultDownload):
     result = downloadAny(url, path)
     resultDownload.set(result)
-
-def onResize(root):
-    theme.onResize(root.winfo_width())
