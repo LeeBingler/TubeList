@@ -6,6 +6,7 @@ Code that manage all the tkinter window
 """
 from app.utilsApp import chooseFile
 from app.Theme import theme
+from app.Loadbars import LoadBars
 
 import tkinter as tk
 import customtkinter
@@ -23,17 +24,14 @@ class TubeListApp:
         self.entryPath = None
         self.buttonPath = None
         self.resultDownload = None
-        self.progress = None
-        self.progressString = None
-        self.progressFrame = None
+        self.loadBars = LoadBars(self.root)
 
         # UI build
         self._initTitle()
         self._initURL()
         self._initPath()
         self._initDownload()
-        self._initLoadbar()
-        self._initLoadbarPlaylist()
+        self.loadBars.init()
         self._initLog()
         self._initFooter()
 
@@ -122,11 +120,12 @@ class TubeListApp:
 
     def _handleDownload(self):
         def run():
+            self.loadBars.resetBars()
             resultString = downloadAny(
-                self.entryUrl.get(), 
-                self.entryPath.get(), 
-                self._progress_callback,
-                self._progressPlaylist
+                self.entryUrl.get(),
+                self.entryPath.get(),
+                self.loadBars.progressCallbackVideo,
+                self.loadBars.progressCallbackPlaylist
             )
             self.resultDownload.set(resultString)
 
@@ -152,41 +151,6 @@ class TubeListApp:
             command=self._handleDownload
         )
         button.pack(anchor="center", pady=20, ipadx=15, ipady=15)
-        
-
-    def _progress_callback(self, percent):
-        self.progress.set(percent)
-        self.progressString.set(f"Video: {int(percent * 100)}%")
-
-
-    def _progressPlaylist(self, index, total):
-        percent = index / total
-        self.progressPlaylist.set(percent)
-        self.progressPlaylistString.set(f"Playlist: {int(percent * 100)}%")
-
-    def _initLoadbar(self):
-        self.progressFrame = tk.Frame(self.root, width=theme.loadbarWidth)
-        self.progressFrame.pack(anchor="center", pady=10)
-
-        self.progress = customtkinter.CTkProgressBar(self.progressFrame, width=800, progress_color=theme.btnDownloadFgColor)
-        self.progress.pack(pady=20, side="right", fill="x")
-        self.progress.set(0)
-        theme.loadbar = self.progress
-
-        self.progressString = tk.StringVar(value="Video: 0%")
-        customtkinter.CTkLabel(self.progressFrame, textvariable=self.progressString, font=theme.fontNormal).pack(side="left", ipadx=15)
-
-    def _initLoadbarPlaylist(self):
-        self.progressFramePlaylist = tk.Frame(self.root, width=theme.loadbarWidth)
-        self.progressFramePlaylist.pack(anchor="center", pady=10)
-
-        self.progressPlaylist = customtkinter.CTkProgressBar(self.progressFramePlaylist, width=800, progress_color=theme.btnDownloadFgColor)
-        self.progressPlaylist.pack(pady=20, side="right", fill="x")
-        self.progressPlaylist.set(0)
-        theme.loadbarPlaylist = self.progressPlaylist
-
-        self.progressPlaylistString = tk.StringVar(value="Playlist: 0%")
-        customtkinter.CTkLabel(self.progressFramePlaylist, textvariable=self.progressPlaylistString, font=theme.fontNormal).pack(side="left", ipadx=15)
 
 
     def _initLog(self):

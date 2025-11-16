@@ -22,7 +22,8 @@ def _downloadVideo(url: str, path: str, progressCallbackVideo):
     yt = YouTube(
         url, 
         'WEB', 
-        on_progress_callback = lambda stream, chunk, bytes_remaining: _on_progress(stream, chunk, bytes_remaining, progressCallbackVideo))
+        on_progress_callback = lambda stream, chunk, bytes_remaining: _on_progress(stream, chunk, bytes_remaining, progressCallbackVideo)
+    )
 
     print(yt.title)
     _downloadAudio(yt, path)
