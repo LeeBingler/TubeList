@@ -73,16 +73,27 @@ class TubeListApp:
 
     def _initURL(self):
         tk.Label(self.root, text="URL of the playlist / song:", font=theme.fontNormal).pack(anchor="center")
+        frame = tk.Frame(self.root)
+        frame.pack(anchor="center")
 
         self.entryUrl = customtkinter.CTkEntry(
-            self.root,
+            frame,
             font=theme.fontNormal,
             width=theme.entryWidth + 400,
             placeholder_text="https://www.youtube.com/watch?v=<Your Playlist>",
             placeholder_text_color=theme.placeholderColor
         )
-        self.entryUrl.pack(pady=10, ipady=10, anchor="center")
+        self.entryUrl.pack(pady=10, ipady=10, anchor="center", side="left")
         theme.registeredEntry["entryUrl"] = self.entryUrl
+
+        self.buttonFormat = customtkinter.CTkButton(
+            frame,
+            text="Change format",
+            font=theme.fontNormal,
+            corner_radius=50,
+            fg_color=theme.highlightBg,
+        )
+        self.buttonFormat.pack(side="right", ipady=10)
 
 
     def _initPath(self):
