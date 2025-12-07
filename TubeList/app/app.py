@@ -12,12 +12,13 @@ import tkinter as tk
 import customtkinter
 from PIL import Image
 
-from download import downloadAny
+from download import YouTubeDownloader
 import threading
 
 class TubeListApp:
     def __init__(self):
         self.root = self._initRoot()
+        self.downloader = YouTubeDownloader("./", "mp3")
 
         # Widgets
         self.entryUrl = None
@@ -25,6 +26,9 @@ class TubeListApp:
         self.buttonPath = None
         self.resultDownload = None
         self.loadBars = LoadBars(self.root)
+        
+        self.formats = ["mp3", "wav", "m4a", "flac", "aac", "opus"]
+        self.formatVar = tk.StringVar(value="mp3")
 
         # UI build
         self._initTitle()
@@ -73,16 +77,29 @@ class TubeListApp:
 
     def _initURL(self):
         tk.Label(self.root, text="URL of the playlist / song:", font=theme.fontNormal).pack(anchor="center")
+        frame = tk.Frame(self.root)
+        frame.pack(anchor="center")
 
         self.entryUrl = customtkinter.CTkEntry(
-            self.root,
+            frame,
             font=theme.fontNormal,
             width=theme.entryWidth + 400,
             placeholder_text="https://www.youtube.com/watch?v=<Your Playlist>",
             placeholder_text_color=theme.placeholderColor
         )
-        self.entryUrl.pack(pady=10, ipady=10, anchor="center")
+        self.entryUrl.pack(pady=10, ipady=10, anchor="center", side="left")
         theme.registeredEntry["entryUrl"] = self.entryUrl
+
+
+        self.buttonFormat = customtkinter.CTkComboBox(
+            frame,
+            values=self.formats,
+            variable=self.formatVar,
+            font=theme.fontNormal,
+            corner_radius=50,
+            fg_color=theme.highlightBg,
+        )
+        self.buttonFormat.pack(side="right", ipady=10)
 
 
     def _initPath(self):
@@ -121,13 +138,17 @@ class TubeListApp:
     def _handleDownload(self):
         def run():
             self.loadBars.resetBars()
-            resultDownload = downloadAny(
-                self.entryUrl.get(),
-                self.entryPath.get(),
-                self.loadBars.progressCallbackVideo,
-                self.loadBars.progressCallbackPlaylist
-            )
-            self.resultDownload.set(f'"{resultDownload["title"]}" is downloaded')
+
+            self.downloader.path = self.entryPath.get()
+            self.downloader.format = self.formatVar.get()
+            self.downloader.set_progress_callbacks(self.loadBars.progressCallbackVideo, self.loadBars.progressCallbackPlaylist)
+
+            resultDownload = self.downloader.download(self.entryUrl.get())
+
+            if (resultDownload['ok']):
+                self.resultDownload.set(f'"{resultDownload["title"]}" is downloaded')
+            else:
+                self.resultDownload.set(f'Error: {resultDownload["error"]}')
             notificationDownloadEnd(resultDownload)
 
         threading.Thread(target=run, daemon=True).start()
