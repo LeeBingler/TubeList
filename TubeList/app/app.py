@@ -92,15 +92,21 @@ class TubeListApp:
 
 
         self.buttonFormat = customtkinter.CTkComboBox(
-            frame,
+            master=frame,
             values=self.formats,
             variable=self.formatVar,
             font=theme.fontNormal,
-            corner_radius=50,
+            corner_radius=10,
+            hover=True,
+            button_hover_color=theme.highlightBg,
+            dropdown_hover_color=theme.bgColor,
             fg_color=theme.highlightBg,
+            dropdown_font=theme.fontNormal,
+            state="readonly",
+            height=70,
+            width=170
         )
-        self.buttonFormat.pack(side="right", ipady=10)
-
+        self.buttonFormat.pack(side="right", pady=10, padx=10)
 
     def _initPath(self):
         tk.Label(self.root, text="Where to download:", font=theme.fontNormal).pack(anchor="center", pady=(20, 0))
@@ -133,7 +139,7 @@ class TubeListApp:
             image=folderImg,
             command=lambda: chooseFile(self.entryPath)
         )
-        self.buttonPath.pack(side="left", ipady=10)
+        self.buttonPath.pack(side="right", ipady=10)
 
     def _handleDownload(self):
         def run():
