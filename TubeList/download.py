@@ -56,7 +56,7 @@ def _checkPath(path: str):
     
     return True
 
-def downloadAny(url: str, path: str, progressCallbackVideo, progressCallbackPlaylist):
+def downloadAny(url: str, path: str, progressCallbackVideo: function, progressCallbackPlaylist: function):
     if url == None or path == None or progressCallbackVideo == None or progressCallbackPlaylist == None:
         print(f"Missing argument {url}, {path}, {progressCallbackVideo}, {progressCallbackPlaylist}")
         return f"Missing argument {url}, {path}, {progressCallbackVideo}, {progressCallbackPlaylist}"

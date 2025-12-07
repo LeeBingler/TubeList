@@ -45,7 +45,7 @@ Built with **Tkinter**, **CustomTkinter**, and **pytubefix**, this project inclu
 3. Launch the application:
 
    ```bash
-   pipenv run python ./TubeList/main.py
+   pipenv run python TubeList/main.py
    ```
 
 ---
