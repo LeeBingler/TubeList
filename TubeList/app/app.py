@@ -25,6 +25,7 @@ class TubeListApp:
         self.buttonPath = None
         self.resultDownload = None
         self.loadBars = LoadBars(self.root)
+        self.formatVar = tk.StringVar(value="mp3")
 
         # UI build
         self._initTitle()
@@ -86,9 +87,12 @@ class TubeListApp:
         self.entryUrl.pack(pady=10, ipady=10, anchor="center", side="left")
         theme.registeredEntry["entryUrl"] = self.entryUrl
 
-        self.buttonFormat = customtkinter.CTkButton(
+
+        formats = ["mp3", "wav", "m4a", "flac", "aac", "opus"]
+        self.buttonFormat = customtkinter.CTkComboBox(
             frame,
-            text="Change format",
+            values=formats,
+            variable=self.formatVar,
             font=theme.fontNormal,
             corner_radius=50,
             fg_color=theme.highlightBg,
@@ -136,9 +140,14 @@ class TubeListApp:
                 self.entryUrl.get(),
                 self.entryPath.get(),
                 self.loadBars.progressCallbackVideo,
-                self.loadBars.progressCallbackPlaylist
+                self.loadBars.progressCallbackPlaylist,
+                self.formatVar.get()
             )
-            self.resultDownload.set(f'"{resultDownload["title"]}" is downloaded')
+
+            if (resultDownload['ok']):
+                self.resultDownload.set(f'"{resultDownload["title"]}" is downloaded')
+            else:
+                self.resultDownload.set(f'Error: {resultDownload["error"]}')
             notificationDownloadEnd(resultDownload)
 
         threading.Thread(target=run, daemon=True).start()

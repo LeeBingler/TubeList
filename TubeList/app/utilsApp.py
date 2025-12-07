@@ -10,11 +10,21 @@ def chooseFile(entry):
         entry.insert(0, file)
 
 def notificationDownloadEnd(resultDownload):
-    notification.notify(
-        title = "TubeList",
-        message = f"Your {resultDownload["type"]} is downloaded:\n{resultDownload["title"]}",
-        ticker = "TubeList",
-        app_icon = "./TubeList/images/icon.ico",
-        timeout = 10,
-        toast = False
-    )
+    if (resultDownload['ok']):
+        notification.notify(
+            title = "TubeList",
+            message = f"Your {resultDownload["type"]} is downloaded:\n{resultDownload["title"]}",
+            ticker = "TubeList",
+            app_icon = "./TubeList/images/icon.ico",
+            timeout = 10,
+            toast = False
+        )
+    else:
+        notification.notify(
+            title = "TubeList",
+            message = "Error with the download",
+            ticker = "TubeList",
+            app_icon = "./TubeList/images/icon.ico",
+            timeout = 10,
+            toast = False
+        )
