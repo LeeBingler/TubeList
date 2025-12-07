@@ -8,6 +8,7 @@ pytubefix = "*"
 customtkinter = "*"
 pillow="*"
 plyer="*"
+ffmpeg="*"
 
 [dev-packages]
 
